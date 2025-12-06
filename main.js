@@ -5,16 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
   /* NAV VIEW SWITCHING */
   const views = document.querySelectorAll("[data-view]");
   function showView(name) {
-    views.forEach(v => v.classList.toggle("active", v.dataset.view === name));
-    document.querySelectorAll("[data-view-target]").forEach(btn => {
+    views.forEach((v) => v.classList.toggle("active", v.dataset.view === name));
+    document.querySelectorAll("[data-view-target]").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.viewTarget === name);
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   showView("home");
 
-  document.querySelectorAll("[data-view-target]").forEach(btn => {
-    btn.addEventListener("click", e => {
+  document.querySelectorAll("[data-view-target]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
       showView(btn.dataset.viewTarget);
     });
@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
   /* HERO TABS */
   const tabButtons = document.querySelectorAll("#searchTabs button");
   const tabContents = document.querySelectorAll(".search-content");
-  tabButtons.forEach(btn => {
+  tabButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      tabButtons.forEach(b => b.classList.remove("active"));
-      tabContents.forEach(c => c.classList.remove("active"));
+      tabButtons.forEach((b) => b.classList.remove("active"));
+      tabContents.forEach((c) => c.classList.remove("active"));
       btn.classList.add("active");
       const target = btn.dataset.tab;
       const content = document.querySelector(
@@ -221,7 +221,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* HOLIDAY SEARCH -> PACKAGES VIEW */
+  /* TOAST + MODAL HELPERS */
+  const toast = document.getElementById("toast");
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.style.display = "block";
+    setTimeout(() => (toast.style.display = "none"), 2500);
+  }
+  function openModal(id) {
+    document.getElementById(id).style.display = "flex";
+  }
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+  document.querySelectorAll(".modal-close").forEach((btn) => {
+    btn.addEventListener("click", () => closeModal(btn.dataset.close));
+  });
+  document.querySelectorAll(".modal-backdrop").forEach((bg) => {
+    bg.addEventListener("click", (e) => {
+      if (e.target === bg) bg.style.display = "none";
+    });
+  });
+
+  /* PACKAGES FILTERS */
   const holidayForm = document.getElementById("holidayForm");
   const searchSummary = document.getElementById("searchSummary");
   const packageList = document.getElementById("packageList");
@@ -298,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Holidays -> Packages
   if (holidayForm) {
     holidayForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -341,28 +364,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // initial packages when direct open
   applyFilters();
-
-  /* MODAL helper + toast */
-  function openModal(id) {
-    document.getElementById(id).style.display = "flex";
-  }
-  function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-  }
-  document.querySelectorAll(".modal-close").forEach((btn) => {
-    btn.addEventListener("click", () => closeModal(btn.dataset.close));
-  });
-  document.querySelectorAll(".modal-backdrop").forEach((bg) => {
-    bg.addEventListener("click", (e) => {
-      if (e.target === bg) bg.style.display = "none";
-    });
-  });
-  const toast = document.getElementById("toast");
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.style.display = "block";
-    setTimeout(() => (toast.style.display = "none"), 2500);
-  }
 
   /* PACKAGE DETAILS + BOOKINGS */
   const packageModalTitle = document.getElementById("pkgModalTitle");
@@ -410,7 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showToast("Booking created (demo only, no real payment).");
   });
 
-  /* CABS */
+  /* CABS – MAIN FORM */
   const cabForm = document.getElementById("cabForm");
   if (cabForm) {
     cabForm.addEventListener("submit", (e) => {
@@ -419,7 +420,72 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* DOCS ENQUIRY */
+  /* HERO QUICK CABS */
+  const cabQuickForm = document.getElementById("cabQuickForm");
+  if (cabQuickForm) {
+    cabQuickForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const pickup = document.getElementById("cabQuickPickup").value;
+      const drop = document.getElementById("cabQuickDrop").value;
+      const date = document.getElementById("cabQuickDate").value;
+      const type = document.getElementById("cabQuickType").value;
+
+      // prefill main cab form
+      document.getElementById("cabPickup").value = pickup;
+      document.getElementById("cabDrop").value = drop;
+      document.getElementById("cabDate").value = date;
+      document.getElementById("cabType").value = type;
+
+      showView("cabs");
+      showToast("Cab details filled below – please confirm & submit.");
+    });
+  }
+
+  /* HERO STAYS FORM */
+  const staysForm = document.getElementById("staysForm");
+  if (staysForm) {
+    staysForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const city = document.getElementById("stayCity").value.trim();
+      const checkIn = document.getElementById("stayCheckIn").value;
+      const checkOut = document.getElementById("stayCheckOut").value;
+      const guests = document.getElementById("stayGuests").value;
+
+      if (!city || !checkIn || !checkOut || !guests) {
+        alert("Please fill all stay details");
+        return;
+      }
+
+      searchSummary.textContent = `Hotels in ${city} • ${checkIn} to ${checkOut} • ${guests} guests`;
+      showView("packages");
+      applyFilters();
+      showToast("Stays search applied (demo).");
+    });
+  }
+
+  /* HERO FLIGHT FORM */
+  const flightForm = document.getElementById("flightForm");
+  if (flightForm) {
+    flightForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const from = document.getElementById("flightFrom").value.trim();
+      const to = document.getElementById("flightTo").value.trim();
+      const depart = document.getElementById("flightDepart").value;
+      const travellers = document.getElementById("flightTravellers").value;
+
+      if (!from || !to || !depart || !travellers) {
+        alert("Please fill all flight details");
+        return;
+      }
+
+      searchSummary.textContent = `Flight search: ${from} → ${to} • ${travellers} travellers • ${depart}`;
+      showView("packages");
+      applyFilters();
+      showToast("Flights search captured (demo only).");
+    });
+  }
+
+  /* DOCS ENQUIRY (CARDS) */
   document.querySelectorAll(".docs-enquire").forEach((btn) => {
     btn.addEventListener("click", () => {
       const service = btn.dataset.doc;
@@ -428,6 +494,23 @@ document.addEventListener("DOMContentLoaded", () => {
       openModal("genericModal");
     });
   });
+
+  /* HERO QUICK DOCS */
+  const docsQuickForm = document.getElementById("docsQuickForm");
+  if (docsQuickForm) {
+    docsQuickForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const service = document.getElementById("docsQuickService").value;
+      const city = document.getElementById("docsQuickCity").value.trim();
+
+      document.getElementById("genericTitle").textContent =
+        "Docs callback requested";
+      document.getElementById("genericBody").textContent =
+        `${service} (${city || "city not specified"}) enquiry captured (demo). Team aapse contact karegi.`;
+      openModal("genericModal");
+      showView("docs");
+    });
+  }
 
   /* CONTACT */
   const contactForm = document.getElementById("contactForm");
