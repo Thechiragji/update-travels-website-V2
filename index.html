@@ -1,52 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>AS Tour & Travels – Luxury Trips, Smart Bookings</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- top bar -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <span>Call: +91-9876543210</span>
-      <span>Email: info@astourtravels.com</span>
-    </div>
-  </div>
-
-  <!-- navbar -->
-  <header class="navbar">
-    <div class="container nav-inner">
-      <div class="nav-logo">
-        <span class="logo-mark">AS</span>
-        <span class="logo-text">Tour & Travels</span>
-      </div>
-      <nav class="nav-links" id="navDesktop">
-        <button data-view-target="home" class="active">Home</button>
-        <button data-view-target="packages">Packages</button>
-        <button data-view-target="cabs">Cabs</button>
-        <button data-view-target="docs">Docs</button>
-        <button data-view-target="bookings">My Bookings</button>
-        <button data-view-target="contact">Contact</button>
-      </nav>
-      <div class="nav-actions">
-        <button id="loginOpen" class="btn btn-ghost btn-sm">Login</button>
-        <button id="signupOpen" class="btn btn-primary btn-sm">Sign Up</button>
-        <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
-      </div>
-    </div>
-    <nav class="nav-mobile" id="navMobile">
-      <button data-view-target="home" class="active">Home</button>
-      <button data-view-target="packages">Packages</button>
-      <button data-view-target="cabs">Cabs</button>
-      <button data-view-target="docs">Docs</button>
-      <button data-view-target="bookings">My Bookings</button>
-      <button data-view-target="contact">Contact</button>
-    </nav>
-  </header>
-
-  <main>
     <!-- HOME VIEW -->
     <section class="section hero" data-view="home">
       <div class="container hero-inner">
@@ -65,15 +16,49 @@
         <div class="hero-right">
           <div class="search-card">
             <div class="search-tabs" id="searchTabs">
-              <button data-tab="stays">Stays</button>
+              <button data-tab="stays" class="active">Stays</button>
               <button data-tab="flights">Flights</button>
               <button data-tab="cabs">Cabs</button>
-              <button data-tab="holidays" class="active">Holidays</button>
+              <button data-tab="holidays">Holidays</button>
               <button data-tab="docs">Docs</button>
             </div>
 
-            <!-- Holidays form -->
-            <div class="search-content active" data-content="holidays">
+            <!-- STAYS FORM -->
+            <div class="search-content active" data-content="stays">
+              <form id="staysForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>City / Hotel</label>
+                    <input id="stayCity" required placeholder="Gwalior, Goa, Delhi..." />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Check-in</label>
+                    <input type="date" id="stayCheckIn" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Check-out</label>
+                    <input type="date" id="stayCheckOut" required />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Guests & rooms</label>
+                    <input type="number" id="stayGuests" min="1" value="2" required />
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full" type="submit">
+                  Search Stays
+                </button>
+                <p class="form-note">
+                  Demo: result Packages page par show hoga – real API abhi nahi hai.
+                </p>
+              </form>
+            </div>
+
+            <!-- HOLIDAYS FORM -->
+            <div class="search-content" data-content="holidays">
               <form id="holidayForm">
                 <div class="form-row">
                   <div class="form-group">
@@ -109,21 +94,113 @@
                 <button class="btn btn-primary btn-full" type="submit">
                   Search Holidays
                 </button>
-                <p class="form-note">Result: curated AS Tour & Travels packages matching your query.</p>
+                <p class="form-note">
+                  Result: AS Tour & Travels ke curated packages filter ho kar dikhenge.
+                </p>
               </form>
             </div>
 
-            <div class="search-content" data-content="stays">
-              <p class="coming-soon">Stays search coming soon. Abhi ke liye Holidays use karo.</p>
-            </div>
+            <!-- FLIGHTS FORM -->
             <div class="search-content" data-content="flights">
-              <p class="coming-soon">Flights module under construction.</p>
+              <form id="flightForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>From</label>
+                    <input id="flightFrom" required placeholder="Delhi" />
+                  </div>
+                  <div class="form-group">
+                    <label>To</label>
+                    <input id="flightTo" required placeholder="Mumbai / Dubai" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Departure</label>
+                    <input type="date" id="flightDepart" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Return (optional)</label>
+                    <input type="date" id="flightReturn" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Travellers</label>
+                    <input type="number" id="flightTravellers" min="1" value="1" required />
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full" type="submit">
+                  Search Flights (demo)
+                </button>
+                <p class="form-note">
+                  Demo: Flights backend Future phase me – abhi summary Packages page pe show hogi.
+                </p>
+              </form>
             </div>
+
+            <!-- CABS QUICK FORM -->
             <div class="search-content" data-content="cabs">
-              <p class="coming-soon">Use Cabs tab below for bookings.</p>
+              <form id="cabQuickForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Pickup city</label>
+                    <input id="cabQuickPickup" required placeholder="Gwalior" />
+                  </div>
+                  <div class="form-group">
+                    <label>Drop city</label>
+                    <input id="cabQuickDrop" required placeholder="Indore / Delhi" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="cabQuickDate" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Trip type</label>
+                    <select id="cabQuickType">
+                      <option value="local">Local 8h/80km</option>
+                      <option value="oneway">One-way outstation</option>
+                      <option value="round">Round trip</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full" type="submit">
+                  Get Cab Quote
+                </button>
+                <p class="form-note">
+                  Demo: Neeche Cabs section me form prefill hoga, wahan se detail confirm kar sakte ho.
+                </p>
+              </form>
             </div>
+
+            <!-- DOCS QUICK FORM -->
             <div class="search-content" data-content="docs">
-              <p class="coming-soon">Docs assistant jaldi live hoga. Abhi “Docs” view se enquiry bhejo.</p>
+              <form id="docsQuickForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Service</label>
+                    <select id="docsQuickService">
+                      <option>MSME Registration</option>
+                      <option>FSSAI Licence</option>
+                      <option>GST Registration</option>
+                      <option>Visa Assistance</option>
+                      <option>Passport</option>
+                      <option>Driving Licence</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>City</label>
+                    <input id="docsQuickCity" placeholder="Gwalior / Bhopal" />
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full" type="submit">
+                  Request Docs Callback
+                </button>
+                <p class="form-note">
+                  Demo: Docs page + popup me confirmation show hoga. Actual filing admin panel se hoga.
+                </p>
+              </form>
             </div>
           </div>
         </div>
@@ -133,388 +210,11 @@
     <!-- category strip -->
     <section class="category-strip" data-view="home">
       <div class="container category-inner">
-        <span class="chip">✈ Flights</span>
-        <span class="chip">🏨 Hotels</span>
-        <span class="chip">🚖 Cabs</span>
-        <span class="chip">🧳 Holidays</span>
-        <span class="chip">🚆 Trains</span>
-        <span class="chip">📄 Docs</span>
+        <button class="chip" data-view-target="packages">✈ Flights</button>
+        <button class="chip" data-view-target="packages">🏨 Hotels</button>
+        <button class="chip" data-view-target="cabs">🚖 Cabs</button>
+        <button class="chip" data-view-target="packages">🧳 Holidays</button>
+        <button class="chip" data-view-target="packages">🚆 Trains</button>
+        <button class="chip" data-view-target="docs">📄 Docs</button>
       </div>
     </section>
-
-    <!-- featured packages home -->
-    <section class="section" data-view="home">
-      <div class="container">
-        <div class="section-header">
-          <h2>Handpicked Holidays</h2>
-          <p>Top-selling AS Tour & Travels packages.</p>
-        </div>
-        <div class="grid grid-3" id="featuredPackages"></div>
-      </div>
-    </section>
-
-    <!-- destinations -->
-    <section class="section" data-view="home">
-      <div class="container">
-        <div class="section-header">
-          <h2>Explore by Destination</h2>
-          <p>Popular routes hotter than Zomato ka surge pricing.</p>
-        </div>
-        <div class="destinations-wrapper">
-          <button class="carousel-btn" id="destPrev">&lt;</button>
-          <div class="destinations-track" id="destTrack"></div>
-          <button class="carousel-btn" id="destNext">&gt;</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- why us -->
-    <section class="section" data-view="home">
-      <div class="container">
-        <div class="section-header"><h2>Why choose AS Tour & Travels?</h2></div>
-        <div class="grid grid-3">
-          <div class="feature-card">
-            <h3>End-to-end support</h3>
-            <p>Booking se lekar boarding tak ek hi WhatsApp number sab handle karega.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Verified partners</h3>
-            <p>Hotels, agents, cab – sab pehle hamari team test karti hai, tabhi live hota hai.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Docs + trips ek jagah</h3>
-            <p>Visa, MSME, FSSAI, GST – paperwork bhi yahi se manage.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- testimonials -->
-    <section class="section" data-view="home">
-      <div class="container">
-        <div class="section-header"><h2>What our travellers say</h2></div>
-        <div class="testimonial-wrapper">
-          <button class="carousel-btn" id="testPrev">&lt;</button>
-          <div class="testimonial-card" id="testimonialCard"></div>
-          <button class="carousel-btn" id="testNext">&gt;</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-band" data-view="home">
-      <div class="container cta-inner">
-        <div>
-          <h2>Confused kya book karna hai?</h2>
-          <p>Dates + rough budget bhejo, baaki ham custom itinerary bana ke de denge.</p>
-        </div>
-        <button class="btn btn-primary" data-view-target="contact">Talk to travel expert</button>
-      </div>
-    </section>
-
-    <!-- PACKAGES VIEW -->
-    <section class="section" data-view="packages">
-      <div class="container">
-        <div class="section-header">
-          <h2>Holiday Packages</h2>
-          <p id="searchSummary">All curated trips via AS Tour & Travels.</p>
-        </div>
-
-        <div class="filters-bar">
-          <div class="filter-group">
-            <span>Sort</span>
-            <select id="sortSelect">
-              <option value="recommended">Recommended</option>
-              <option value="priceLow">Price: Low to High</option>
-              <option value="priceHigh">Price: High to Low</option>
-              <option value="nightsLow">Nights: Short to Long</option>
-              <option value="nightsHigh">Nights: Long to Short</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="packages-layout">
-          <aside class="sidebar">
-            <section>
-              <h3>Budget (per person)</h3>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Min ₹</label>
-                  <input type="number" id="minBudget" placeholder="10000" />
-                </div>
-                <div class="form-group">
-                  <label>Max ₹</label>
-                  <input type="number" id="maxBudget" placeholder="80000" />
-                </div>
-              </div>
-            </section>
-            <section>
-              <h3>Duration</h3>
-              <label><input type="checkbox" class="durFilter" value="short" /> 1–3 nights</label><br />
-              <label><input type="checkbox" class="durFilter" value="mid" /> 4–6 nights</label><br />
-              <label><input type="checkbox" class="durFilter" value="long" /> 7+ nights</label>
-            </section>
-            <section>
-              <h3>Theme</h3>
-              <label><input type="checkbox" class="themeFilter" value="honeymoon" /> Honeymoon</label><br />
-              <label><input type="checkbox" class="themeFilter" value="family" /> Family</label><br />
-              <label><input type="checkbox" class="themeFilter" value="friends" /> Friends / Group</label>
-            </section>
-            <button class="btn btn-ghost btn-full" id="resetFilters">Reset filters</button>
-          </aside>
-
-          <div>
-            <div class="package-list" id="packageList"></div>
-            <p id="noResults" style="display:none;margin-top:1rem;font-size:.85rem;color:var(--text-muted);">
-              No packages match these filters. Try clearing filters or changing budget.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CABS VIEW -->
-    <section class="section" data-view="cabs">
-      <div class="container">
-        <div class="section-header">
-          <h2>Cab Booking</h2>
-          <p>Local & outstation cabs through verified partners.</p>
-        </div>
-        <div class="simple-grid">
-          <form id="cabForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Pickup city</label>
-                <input required placeholder="Gwalior" id="cabPickup" />
-              </div>
-              <div class="form-group">
-                <label>Drop city</label>
-                <input required placeholder="Indore / Delhi" id="cabDrop" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Trip type</label>
-                <select id="cabType">
-                  <option value="local">Local 8h/80km</option>
-                  <option value="oneway">One-way outstation</option>
-                  <option value="round">Round trip outstation</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Date</label>
-                <input type="date" required id="cabDate" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Car type</label>
-                <select id="cabCar">
-                  <option>Sedan</option>
-                  <option>SUV</option>
-                  <option>Innova</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Approx. kms</label>
-                <input type="number" id="cabKm" placeholder="300" />
-              </div>
-            </div>
-            <button class="btn btn-primary btn-full">Get cab quote</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- DOCS VIEW -->
-    <section class="section" data-view="docs">
-      <div class="container">
-        <div class="section-header">
-          <h2>Documentation Services</h2>
-          <p>MSME, FSSAI, GST, Visa – sab ek hi jagah se manage.</p>
-        </div>
-        <div class="docs-grid">
-          <div class="docs-card">
-            <h3>MSME Registration</h3>
-            <small>Processing: 3–5 working days</small>
-            <p>Udyam registration with document guidance & filing.</p>
-            <button class="btn btn-ghost btn-sm docs-enquire" data-doc="MSME Registration">Enquire</button>
-          </div>
-          <div class="docs-card">
-            <h3>FSSAI Licence</h3>
-            <small>Processing: 7–10 days</small>
-            <p>Food licence for cloud kitchens, restaurants & cafes.</p>
-            <button class="btn btn-ghost btn-sm docs-enquire" data-doc="FSSAI Licence">Enquire</button>
-          </div>
-          <div class="docs-card">
-            <h3>GST Registration</h3>
-            <small>Processing: 5–7 days</small>
-            <p>New GST registration + number activation support.</p>
-            <button class="btn btn-ghost btn-sm docs-enquire" data-doc="GST Registration">Enquire</button>
-          </div>
-          <div class="docs-card">
-            <h3>Visa Assistance</h3>
-            <small>Tourist / Business visa</small>
-            <p>Document checklist, form filling & appointment support.</p>
-            <button class="btn btn-ghost btn-sm docs-enquire" data-doc="Visa Assistance">Enquire</button>
-          </div>
-          <div class="docs-card">
-            <h3>Passport</h3>
-            <small>New / Re-issue</small>
-            <p>Application filing & slot booking help.</p>
-            <button class="btn btn-ghost btn-sm docs-enquire" data-doc="Passport Service">Enquire</button>
-          </div>
-          <div class="docs-card">
-            <h3>Driving Licence</h3>
-            <small>Learning + Permanent</small>
-            <p>RTO paperwork & slot management assistance.</p>
-            <button class="btn btn-ghost btn-sm docs-enquire" data-doc="Driving Licence">Enquire</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BOOKINGS VIEW -->
-    <section class="section" data-view="bookings">
-      <div class="container">
-        <div class="section-header">
-          <h2>My Bookings</h2>
-          <p>Yahan tumhare saare holiday package bookings dikhengi (page reload ke bina, session level).</p>
-        </div>
-        <table id="bookingsTable">
-          <thead>
-            <tr>
-              <th>Package</th>
-              <th>Travellers</th>
-              <th>Nights</th>
-              <th>Amount</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="bookingsEmpty">
-              <td colspan="5">Abhi tak koi booking nahi. Packages se "Book now" karo.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- CONTACT VIEW -->
-    <section class="section" data-view="contact">
-      <div class="container">
-        <div class="section-header">
-          <h2>Contact / Callback</h2>
-          <p>Travel query ya docs doubt – form bharo, ham call back karenge.</p>
-        </div>
-        <form id="contactForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Name</label>
-              <input required id="contactName" />
-            </div>
-            <div class="form-group">
-              <label>Phone</label>
-              <input required id="contactPhone" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Service type</label>
-              <select id="contactService">
-                <option>Holiday package</option>
-                <option>Cab</option>
-                <option>Docs</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Preferred time</label>
-              <input placeholder="Morning / Evening" id="contactTime" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea id="contactMsg" rows="3" placeholder="Brief requirement..."></textarea>
-          </div>
-          <button class="btn btn-primary btn-full">Submit request</button>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div>
-        <h3>AS Tour & Travels</h3>
-        <p>Gwalior based premium travel + documentation partner. Offline trust, online system.</p>
-      </div>
-      <div>
-        <h4>Quick links</h4>
-        <a href="#" data-view-target="packages">Holiday Packages</a><br />
-        <a href="#" data-view-target="cabs">Cab Booking</a><br />
-        <a href="#" data-view-target="docs">Docs Services</a><br />
-        <a href="#" data-view-target="bookings">My Bookings</a>
-      </div>
-      <div>
-        <h4>Contact</h4>
-        <p>Gwalior, Madhya Pradesh</p>
-        <p>Phone: +91-9876543210</p>
-        <p>Email: info@astourtravels.com</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      © <span id="year"></span> AS Tour & Travels. All rights reserved.
-    </div>
-  </footer>
-
-  <!-- MODALS -->
-  <div class="modal-backdrop" id="packageModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 id="pkgModalTitle">Package details</h2>
-        <button class="modal-close" data-close="packageModal">&times;</button>
-      </div>
-      <p id="pkgModalMeta"></p>
-      <p id="pkgModalDesc"></p>
-      <p id="pkgModalPrice" style="margin:.4rem 0 .7rem;font-weight:600;"></p>
-      <button class="btn btn-primary btn-full" id="pkgBookBtn">Book now (demo)</button>
-    </div>
-  </div>
-
-  <div class="modal-backdrop" id="authModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 id="authTitle">Login</h2>
-        <button class="modal-close" data-close="authModal">&times;</button>
-      </div>
-      <form id="authForm">
-        <div class="form-group">
-          <label>Name</label>
-          <input id="authName" required placeholder="Your name" />
-        </div>
-        <div class="form-group">
-          <label>Email (demo only)</label>
-          <input id="authEmail" required placeholder="you@example.com" />
-        </div>
-        <button class="btn btn-primary btn-full" style="margin-top:.6rem">Continue</button>
-      </form>
-      <p class="form-note">No real login – sirf front-end demo, naam nav bar me show hoga.</p>
-    </div>
-  </div>
-
-  <div class="modal-backdrop" id="genericModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 id="genericTitle">Request submitted</h2>
-        <button class="modal-close" data-close="genericModal">&times;</button>
-      </div>
-      <p id="genericBody"></p>
-    </div>
-  </div>
-
-  <div class="toast" id="toast"></div>
-
-  <script src="main.js"></script>
-</body>
-</html>
